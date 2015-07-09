@@ -1,0 +1,5 @@
+<td data-order="{{order}}">{{name}}</td>
+<td>{{phone}}</td>
+<td>{{time}}</td>
+<td><button class="cancel-action delete-action" title="Delete Call">X</button></td>
+<td {{#ifpassed time}}class="is-passed"{{/ifpassed}}><input type="checkbox" {{#ifpassed time}}checked{{else}}disabled{{/ifpassed}} /></td>
