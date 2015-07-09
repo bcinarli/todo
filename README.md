@@ -1,2 +1,2 @@
 # todo
-Simple ToDo App
+Simple ToDo App for today's calls

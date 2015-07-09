@@ -1,0 +1,36 @@
+{
+  "name": "todo-calls",
+  "version": "0.1.0",
+  "homepage": "https://github.com/bcinarli/todo",
+  "authors": [
+    "Bilal Çınarlı <bcinarli@gmail.com>"
+  ],
+  "description": "Simple ToDo App for today's calls",
+  "main": "index.html",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "todo",
+    "backbone",
+    "localStorage"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "backbone": "~1.2.1",
+    "caffeine": "~0.4.1",
+    "melange": "~0.5.0",
+    "Backbone.localStorage": "~1.1.16",
+    "handlebars": "~3.0.3"
+  },
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}
