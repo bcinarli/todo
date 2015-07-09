@@ -1,0 +1,30 @@
+/* @author Bilal Cinarli */
+
+/** -------------------------------------------
+    Fields
+    ------------------------------------------- **/
+fieldset {
+    margin-bottom: $base-double-gutter;
+    border: 1px solid $color-gray;
+    border-radius: 3px;
+}
+
+legend {
+    font-family: $base-title-font-family;
+    width: auto;
+    padding: 0 5px;
+    margin-left: $base-gutter - 5px;
+}
+
+.buttons {
+    padding: 0 $base-gutter $base-gutter;
+    text-align: end;
+
+    button {
+        margin-left: 10px;
+    }
+}
+
+.delete-action.delete-action {
+    padding: $base-input-spacing 2*$base-input-spacing;
+}

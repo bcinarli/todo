@@ -1,0 +1,16 @@
+/* @author Bilal Cinarli */
+
+/** -------------------------------------------
+    Inputs
+    ------------------------------------------- **/
+#new-call {
+    input {
+        height: 32px;
+        border-radius: 3px;
+
+        @include placeholder(){
+            padding-top: 2px;
+            @include font-size(.8rem);
+        }
+    }
+}

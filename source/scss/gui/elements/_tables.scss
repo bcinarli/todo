@@ -1,0 +1,65 @@
+/* @author Bilal Cinarli */
+
+/** -------------------------------------------
+    Tables
+    ------------------------------------------- **/
+.table-wrapper {
+    border: 1px solid $color-gray;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: $base-double-gutter;
+}
+
+.data-table {
+    th {
+        background-color: #e0e0e0;
+        font-family: $base-title-font-family;
+    }
+
+    tbody {
+        tr:nth-child(odd) {
+            background-color: $color-light-gray;
+        }
+    }
+
+    .record-options {
+        width: 50px;
+    }
+
+    .record-status {
+        width: 40px;
+    }
+
+    .sortable {
+        position: relative;
+        cursor: pointer;
+
+        @include arrow(#000, 5px);
+        @include arrow(#000, 5px, bottom, ":before");
+
+        &:after,
+        &:before {
+            right: 15px;
+        }
+
+        &:after {
+            top: 9px;
+        }
+
+        &:before {
+            bottom: 9px;
+        }
+
+        &.asc {
+            &:after {
+                display: none;
+            }
+        }
+
+        &.desc {
+            &:before {
+                display: none;
+            }
+        }
+    }
+}
