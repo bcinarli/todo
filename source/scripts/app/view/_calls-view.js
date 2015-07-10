@@ -7,9 +7,11 @@ var tcApp = tcApp || {};
 (function() {
     "use strict";
 
+    // Single Call item
     tcApp.callsView = Backbone.View.extend({
         tagName: "tr",
 
+        // Call item template
         template: tcApp.Templates["call-list"],
 
         events: {
@@ -32,7 +34,13 @@ var tcApp = tcApp || {};
         },
 
         delete: function() {
-            if(confirm("The call will be deleted. Do you want to continue?")) {
+            // show confirmation window in not testing
+            if(typeof mochaTesting === "undefined") {
+                if(confirm("The call will be deleted. Do you want to continue?")) {
+                    this.model.destroy();
+                }
+            }
+            else {
                 this.model.destroy();
             }
         }

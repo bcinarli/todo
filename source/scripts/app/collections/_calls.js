@@ -9,12 +9,11 @@ var tcApp = tcApp || {};
 
     tcApp.Calls = Backbone.Collection.extend({
         model       : tcApp.Call,
+
+        // Local storage with namespace "todo-calls"
         localStorage: new Backbone.LocalStorage("todo-calls"),
 
-        finished: function(){
-
-        },
-
+        // initial sorting when collection fetched first time
         comparator: "time"
     });
 

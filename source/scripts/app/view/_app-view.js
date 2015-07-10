@@ -7,6 +7,10 @@ var tcApp = tcApp || {};
 (function() {
     "use strict";
 
+    /**
+     * Wrapper View of the application
+     * All main events and subviews rendered here
+     */
     tcApp.View = Backbone.View.extend({
         el: "#tc-app",
 
@@ -18,11 +22,20 @@ var tcApp = tcApp || {};
             "click .show-finished": "showFinished"
         },
 
+        // Templates using the main view. Other templates defined in subviews
         templates: {
             nextCall: tcApp.Templates["next-call"]
         },
 
+        /**
+         * Initializes the application
+         * bind events and starts to listen model changes,
+         * if any previously added call present, renders them
+         */
         initialize: function() {
+            /**
+             * Cache the items
+             */
             this.$form = this.$("#new-call");
             this.$list = this.$("#all-calls");
             this.$next = this.$("#next-call");
@@ -32,66 +45,84 @@ var tcApp = tcApp || {};
             this.listenTo(tcApp.calls, "sort", this.sortAll);
             this.listenTo(tcApp.calls, "all", _.debounce(this.render, 0));
 
+            // make sure render when at the and of the fetch
             tcApp.calls.fetch({reset: true});
         },
 
         render: function() {
+            /**
+             * if any stored call present, shows the Calls list
+             * also finds the next available call
+             */
             if(tcApp.calls.length) {
                 this.$list.removeClass("is-hidden");
 
-                var $next = this.findNext();
+                var $next = tcApp.findNext();
 
                 if(typeof $next !== "undefined") {
                     this.$next.removeClass("is-hidden");
                     this.showNextCall($next);
                 }
             }
+            /**
+             * if there are no calls or all calls are deleted
+             * hides the Call list and Next Call panel
+             */
             else {
                 this.$next.addClass("is-hidden");
                 this.$list.addClass("is-hidden");
             }
         },
 
+        // Add a single call item to the list by creating a sub-view for it, and
+        // appending its element to the `<tr>`.
         addCall: function(call) {
             var view = new tcApp.callsView({model: call});
 
             this.$list.find("tbody").append(view.render().el);
         },
 
+        // Add all call items in collection
         addCalls: function() {
             this.$list.find("tbody").html("");
 
             tcApp.calls.each(this.addCall, this);
         },
 
+        // Renders the Next Call panel if any upcoming call available
         showNextCall: function($next) {
             this.$next.html(this.templates.nextCall($next));
         },
 
+        // Shows all items in the Call list
         showAll: function(e) {
             e.preventDefault();
 
             this.$list.find(".is-hidden").removeClass("is-hidden");
         },
 
+        // Shows only the upcoming call item in the Call list
         showNext: function(e) {
             e.preventDefault();
 
-            var $next = this.findNext();
+            var $next = tcApp.findNext();
 
             this.$list.find("#" + $next.id).parent().removeClass("is-hidden").siblings().addClass("is-hidden");
         },
 
+        // Shows only finished calls in the Call list
         showFinished: function(e) {
             e.preventDefault();
 
             this.$list.find(".is-passed").parent().removeClass("is-hidden").siblings().addClass("is-hidden");
         },
 
+        // Force re-rendering to sorted collection
         sortAll: function() {
             this.addCalls();
         },
 
+        // Trigger sorting according to direction and column
         sortCalls: function(e) {
             e.preventDefault();
 
@@ -102,75 +133,26 @@ var tcApp = tcApp || {};
             this.$list.find(".sortable").removeClass("asc desc");
             $e.addClass(direction);
 
-            this.sort(sortBy, direction);
+            tcApp.sort(sortBy, direction);
         },
 
+        // Adds news call to the list
         createCall: function(e) {
             e.preventDefault();
 
             var _self = this,
                 callData = tcApp.serializeJSON(_self.$form);
 
+            // replace submitted phone number with reformatted one
             callData["phone"] = tcApp.reformatPhone(callData["phone"]);
 
             tcApp.calls.create(callData, {
                     success: function() {
                         _self.$form.find("input").val("");
-                        _self.sort("time", "asc");
+                        tcApp.sort("time", "asc");
                     }
                 }
             );
-        },
-
-        /**
-         * Utility Methods
-         */
-
-        /**
-         * Finds the first call (the next call).
-         * Loops through the call records and compare time with current time
-         */
-        findNext: function() {
-            var date = new Date(),
-                time = date.getHours() + ":" + date.getMinutes(),
-                next = "",
-                tmp = [];
-
-            // first need to copy model to a temp array
-            // otherwise, the ordering changes everytime
-            _.each(tcApp.calls.models, function(item) {
-                tmp.push(item.attributes);
-            });
-
-            var sorted = _.sortBy(tmp, function(item) {
-                return item.time;
-            });
-
-            _.each(sorted, function(item) {
-                if(next === "" && Date.parse("01/01/2015 " + item.time) > Date.parse("01/01/2015 " + time)) {
-                    next = item;
-                }
-            });
-
-            return next;
-        },
-
-        /**
-         * Backbone Collection comparator modifier
-         * Modifies the comparator method according to given column name and the directions
-         * By default, collection sorted according to "time" in ascending order.
-         * @param sortBy
-         * @param direction
-         */
-        sort: function(sortBy, direction) {
-            tcApp.calls.comparator = function(call1, call2) {
-                if(direction === "desc") {
-                    return call1.get(sortBy) > call2.get(sortBy) ? -1 : 1;
-                }
-
-                return call1.get(sortBy) > call2.get(sortBy) ? 1 : -1;
-            };
-            tcApp.calls.sort();
         }
     });
 })();
