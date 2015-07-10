@@ -140,7 +140,7 @@ var tcApp = tcApp || {};
 
         validatePhone: function(e) {
             // todo make this check more programmatic
-            return e.which === 0 || e.which === 8 || e.which === 32 || e.which === 43 || e.which === 187 || e.which === 189 || (e.which >= 48 && e.which <= 57);
+            return e.which === 0 || e.which === 8 || e.which === 9 || e.which === 32 || e.which === 43 || e.which === 187 || e.which === 189 || (e.which >= 48 && e.which <= 57);
         },
 
         // Adds news call to the list
