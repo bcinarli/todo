@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ToDo Calls</title>
+
+    <link rel="stylesheet" href="./../node_modules/mocha/mocha.css" />
+
+    <script>
+        var mochaTesting = true;
+    </script>
+</head>
+<body>
+<div id="wrapper" class="page-wrap">
+    <div id="tc-app" style="display: none">
+        <header class="page-header">
+            <h1 class="site-title">ToDo Calls</h1>
+        </header>
+        <form id="new-call" method="post" action="">
+            <fieldset>
+                <legend>Add Call</legend>
+                <ol class="form-elements group">
+                    <li class="five-columns">
+                        <label class="item item-stacked one-whole">
+                            <span class="item-label">Name</span>
+                            <input type="text" name="name" id="name" class="one-whole" maxlength="30" placeholder="Name Surname" required />
+                        </label>
+                    </li>
+
+                    <li class="five-columns">
+                        <label class="item item-stacked one-whole">
+                            <span class="item-label">Phone</span>
+                            <input type="tel" name="phone" id="phone" class="one-whole" placeholder="+XXX XXX XX XX or 00XXX XXX XX XX" required />
+                        </label>
+                    </li>
+
+                    <li class="two-columns">
+                        <label class="item item-stacked one-whole">
+                            <span class="item-label">Time</span>
+                            <input type="time" name="time" id="time" class="one-whole" required />
+                        </label>
+                    </li>
+                </ol>
+                <div class="buttons">
+                    <button class="primary-action">Add Call</button>
+                </div>
+            </fieldset>
+        </form>
+
+        <div id="next-call" class="is-hidden"></div>
+
+        <div id="all-calls" class="is-hidden">
+            <div class="table-wrapper">
+                <table id="all-calls-list" class="data-table">
+                    <thead>
+                    <tr>
+                        <th id="js-name" class="sortable" data-sort="name">Name</th>
+                        <th>Phone</th>
+                        <th id="js-time" class="sortable asc" data-sort="time">Time</th>
+                        <th class="record-options">&nbsp;</th>
+                        <th class="record-status">&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="buttons">
+                <button class="show-all">All</button>
+                <button class="show-next">Next</button>
+                <button class="show-finished">Finished</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./../assets/scripts/vendors/jquery.min.js"></script>
+<script src="./../assets/scripts/todo-calls.js"></script>
+
+<div id="mocha"></div>
+<script src="./../node_modules/mocha/mocha.js"></script>
+<script src="./../node_modules/chai/chai.js"></script>
+<script>
+    mocha.ui('bdd');
+    mocha.reporter('html');
+    var expect = chai.expect;
+</script>
+<script src="./tests.js"></script>
+<script>
+    mocha.run();
+</script>
+</body>
+</html>
