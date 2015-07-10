@@ -19,7 +19,8 @@ var tcApp = tcApp || {};
             "click .sortable"     : "sortCalls",
             "click .show-all"     : "showAll",
             "click .show-next"    : "showNext",
-            "click .show-finished": "showFinished"
+            "click .show-finished": "showFinished",
+            "keydown #phone"      : "validatePhone"
         },
 
         // Templates using the main view. Other templates defined in subviews
@@ -37,6 +38,7 @@ var tcApp = tcApp || {};
              * Cache the items
              */
             this.$form = this.$("#new-call");
+            this.$phone = this.$("#phone");
             this.$list = this.$("#all-calls");
             this.$next = this.$("#next-call");
 
@@ -134,6 +136,11 @@ var tcApp = tcApp || {};
             $e.addClass(direction);
 
             tcApp.sort(sortBy, direction);
+        },
+
+        validatePhone: function(e) {
+            // todo make this check more programmatic
+            return e.which === 0 || e.which === 8 || e.which === 32 || e.which === 43 || e.which === 187 || e.which === 189 || (e.which >= 48 && e.which <= 57);
         },
 
         // Adds news call to the list
