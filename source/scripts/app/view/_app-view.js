@@ -135,7 +135,7 @@ var tcApp = tcApp || {};
             this.$list.find(".sortable").removeClass("asc desc");
             $e.addClass(direction);
 
-            tcApp.sort(sortBy, direction);
+            tcApp.sort(tcApp.calls, sortBy, direction);
         },
 
         validatePhone: function(e) {

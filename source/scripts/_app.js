@@ -76,15 +76,15 @@ var tcApp = tcApp || {};
      * @param sortBy
      * @param direction
      */
-    tcApp.sort = function(sortBy, direction) {
-        tcApp.calls.comparator = function(call1, call2) {
+    tcApp.sort = function(collection, sortBy, direction) {
+        collection.comparator = function(call1, call2) {
             if(direction === "desc") {
                 return call1.get(sortBy) > call2.get(sortBy) ? -1 : 1;
             }
 
             return call1.get(sortBy) > call2.get(sortBy) ? 1 : -1;
         };
-        tcApp.calls.sort();
+        collection.sort();
     };
 
     new tcApp.View({model: tcApp.Call});
