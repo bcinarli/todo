@@ -32,10 +32,10 @@ var tcApp = tcApp || {};
         var reformatted;
 
         // remove spaces, dash and parenthesis and replace
-        reformatted = phone.replace(/\+/g, "00").replace(/[\(\)\-\s+]/g, "");
+        reformatted = phone.replace(/\+/g, "00").replace(/[\(\)\-\s+]/g, ""); 
 
         // change phone format for storage
-        reformatted = reformatted.replace(/(\d{5})(\d{3})(\d{3})/, "$1 $2 $3 ");
+        reformatted = reformatted.replace(/(\d{4})(\d{3})(\d{2})(\d{2})/, "$1 $2 $3 $4");
 
         return reformatted;
     };
